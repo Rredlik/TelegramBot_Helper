@@ -7,17 +7,13 @@ import weather_parser
 bot = telebot.TeleBot('5526113848:AAHXJKLH5BEDyogSFUbaupnrE1H2NoehBoI', parse_mode=None)
 
 
-@bot.message_handler(commands=['start'])
-def start(message):
+def main_menu_buttons(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    mess = f'Привет, {message.from_user.first_name}!'
-    bot.send_message(message.chat.id, mess, parse_mode='html')
 
     taskmanager_button = types.KeyboardButton('✅ Таск менеджер')
     weather_button = types.KeyboardButton('🌤️ Погода')
     chart_button = types.KeyboardButton('📈 Курсы валют')
     smth_button = types.KeyboardButton('котик')
-
     markup.row(weather_button)
     markup.row(taskmanager_button, chart_button)
     markup.row(smth_button)
@@ -26,6 +22,14 @@ def start(message):
                      "Это меню бота",
                      parse_mode='html',
                      reply_markup=markup)
+
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    mess = f'Привет, {message.from_user.first_name}!'
+    bot.send_message(message.chat.id, mess, parse_mode='html')
+
+    main_menu_buttons(message)
 
 
 @bot.message_handler(content_types=['text'])
@@ -110,20 +114,7 @@ def get_user_text(message):
         bot.send_photo(message.chat.id, img_kitty)
 
     elif message.text == "🔙 В главное меню":
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-
-        taskmanager_button = types.KeyboardButton('✅ Таск менеджер')
-        weather_button = types.KeyboardButton('🌤️ Погода')
-        chart_button = types.KeyboardButton('📈 Курсы валют')
-        smth_button = types.KeyboardButton('котик')
-        markup.row(weather_button)
-        markup.row(taskmanager_button, chart_button)
-        markup.row(smth_button)
-
-        bot.send_message(message.chat.id,
-                         "Это меню бота",
-                         parse_mode='html',
-                         reply_markup=markup)
+        main_menu_buttons(message)
 
 
 bot.polling(none_stop=True)
