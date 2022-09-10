@@ -7,8 +7,13 @@ def weather_on_hours():
     template_text = ['', '  ', ', ощущается как ']
     temp_text = ''
 
+    proxies = {
+        'http': 'http://10.10.1.10:3128',
+        'https': 'http://10.10.1.10:1080',
+    }
+
     url = 'https://world-weather.ru/pogoda/russia/yekaterinburg/24hours/'
-    response = requests.get(url)
+    response = requests.get(url, proxies=proxies)
     html = BS(response.content, 'html.parser')
 
 
@@ -32,8 +37,13 @@ def weather_on_week():
     template_text = ['','\n🌑', '  ', ', ощущается как ', '\n🌞', '  ', ', ощущается как ']
     temp_text = ''
 
+    proxies = {
+        'http': 'http://10.10.1.10:3128',
+        'https': 'http://10.10.1.10:1080',
+    }
+
     url = 'https://world-weather.ru/pogoda/russia/yekaterinburg/7days/'
-    response = requests.get(url)
+    response = requests.get(url, proxies=proxies)
     html = BS(response.content, 'html.parser')
 
 
