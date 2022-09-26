@@ -67,7 +67,7 @@ def db_manipulations(operation):
 
 
     except Exception as _ex:
-        print(f"[DB error] Error for user {operation[1]}:", _ex)
+        print(f"[DB error] Error for user {operation[1]}, {operation[2]}:", _ex)
     finally:
         if db_connection:
             # cursor.close()
